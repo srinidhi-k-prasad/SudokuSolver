@@ -1,4 +1,4 @@
-## **Sudoku Solver**
+# **Sudoku Solver**
 
 ![Semantic description of image](/source/images/results.png "Sudoku-Solved")
 
@@ -13,20 +13,20 @@ A simple C++ project, that aims to:
 
 The contents of the program can be best described as follows:
 
-* `ImageProcessor` handles the pre-processing steps needed to identify the Sudoku grid in an image, localise it and extract the Region of Interest for digit recognition. 
+* `ImageProcessor` handles the pre-processing steps needed to identify the Sudoku grid, and extract the ROI for digit recognition. 
 * `DigitRecogniser` accepts the processed image with the Sudoku grid to classify the digits and store them in a `vector<vector<int>>`.
-* `TrainOCR`, runs for the first time if the trained model is not present. It used Histogram of Oriented Gradients (HoG) and Support Vector Machines (SVM) to train the classifier on the MNIST dataset. 
-* `Sudoku` , it contains the logic for solving the puzzle based on backtracking algorithm. It accepts the vector of identified digits and after solving returns a vector of int's as the solution which is printed on the console output.
+* `TrainOCR` is to train the OCR-algorithm. It is only called if the model is untrained. It uses Histogram of Oriented Gradients (HoG) and Support Vector Machines (SVM) to train the classifier on the MNIST dataset. 
+* `Sudoku` contains the logic for solving the puzzle based on backtracking algorithm. It accepts the vector of identified digits and after solving returns a vector of int's as the solution which is printed on the console output.
 
 ### Program Flow
 
 `main.cpp`, as the name suggests, is the main-entry point for the application.
 
 * The program first checks if the image was specified as the second argument during execution. If not, it raises a helpful error to the user.
-* The image is then passed to the `ImageProcessor` object to perform pre-processing operations such as blur or edge-detection to identifiy the outer grid of the sudoku-puzzle.
-* Then, the objects for the `TrainOCR` & `DigitRecogniser` are created to which, the pre-processed image is passed as an argument. 
-* Post digit-classification, a vector is returned by `DigitRecogniser` class which is then passed on to the `Sudoku` object calling the `SolveBoard` function for a solution.
-* If a solution exists, it is re-projected on a duplicate of the image and displayed as a console output. If not solution exists, the string "Solution not found" is returned as the output.
+* The image is then passed to the `ImageProcessor` object to perform pre-processing operations such as blur or edge-detection. The objective here is to identify the outer grid of the sudoku-puzzle.
+* With a pre-processed image, the objects to the class `TrainOCR` & `DigitRecogniser` are created; Here, the pre-processed image is passed as an argument. 
+* Post digit-classification, a vector is returned by `DigitRecogniser` class which is passed on to the `Sudoku` object calling the `SolveBoard` function for a solution.
+* If a solution exists, it is re-projected on a duplicate of the image and displayed as a console output. If no solution exists, the string "Solution not found" is returned as the output.
 
 ### **Dependencies**
 
@@ -69,7 +69,6 @@ user@pc:~$ SudokuSolver/build/./sudoko <path_to_the_sudoku_image>
 It is of importance to declare that the implementation has only been addressed for the input test-image. 
 
 1. So, the classifier is not robust. It may wrongly classify the digits. 
-	
 2. Blank spaces are sometimes misclassified, if they that contain that stray pixel.
 	
 ### **Acknowledgements**
